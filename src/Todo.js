@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ListItems from './components/ListItems'
-/* import {db, fire} from './fire'
-import 'firebase/firestore' */
+import {db, fire} from './fire'
+import 'firebase/firestore' 
 import './todo.css';
 
 export default class Todo extends Component{
@@ -49,27 +49,30 @@ export default class Todo extends Component{
       })  
       this.state.items = newItems
      
-      
-      /* db.collection('todos').add({
+      console.log(this.state.currentItem.text)
+      db.collection('todos').doc(this.state.currentItem.text).set({
+        
         text : this.state.currentItem.text,
         key: this.state.currentItem.key,
         pseudo: JSON.parse(localStorage.getItem('pseudo'))
       }).then((docRef) => {
         
         
-      }) */
+      }) 
     }
    this.saveStateToLocalStorage()
   }
   //delete
   deleteItem =(key,ev)=>{
-    //db.collection('todos').delete()
+    db.collection('todos').doc(key).delete()
+    
     //console.log(ev.target.parentElement.getAttribute('data-id'))
     const filteredItems = this.state.items.filter(item => item.key!==key)
     this.setState({
       items : filteredItems
     })
     this.saveStateToLocalStorage()
+    this.reload(ev)
    }
 
    //editer
@@ -91,11 +94,11 @@ export default class Todo extends Component{
     localStorage.setItem('state', JSON.stringify(this.state))
     
   }
-
-  componentDidMount() {
   
-    const state = localStorage.getItem('state')
-    if (state) {
+  reload(e){
+    console.log(e)
+    const state = db.collection('todos')
+    /* if (state) {
       this.setState(JSON.parse(state))
       this.setState({
         currentItem : {
@@ -104,12 +107,11 @@ export default class Todo extends Component{
           pseudo: JSON.parse(localStorage.getItem('pseudo'))
         }
       })
-    }
-   /*  if (state) {
+    } */
+     if (state) {
       state
       .get()
       .then(querySnapshot => {
-       
         this.setState({
           items : querySnapshot.docs.map(doc => doc.data()),
          
@@ -134,7 +136,50 @@ export default class Todo extends Component{
     });
   
       
+    } 
+  }
+  componentDidMount() {
+  
+    const state = db.collection('todos')
+    /* if (state) {
+      this.setState(JSON.parse(state))
+      this.setState({
+        currentItem : {
+          text:'',
+          key:'',
+          pseudo: JSON.parse(localStorage.getItem('pseudo'))
+        }
+      })
     } */
+     if (state) {
+      state
+      .get()
+      .then(querySnapshot => {
+        this.setState({
+          items : querySnapshot.docs.map(doc => doc.data()),
+         
+          currentItem : {
+            text:'',
+            key:'',
+            pseudo: JSON.parse(localStorage.getItem('pseudo'))
+          }
+        })
+        console.log(this.state.items)
+      
+      })
+      .then(function(doc) {
+        if (doc.exists) {
+            console.log("Document data:", doc.data());
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
+  
+      
+    } 
   }
   
   render(){

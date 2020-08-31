@@ -27,7 +27,7 @@ export default function ListItems (props){
                   
                 />
                 <p className="pseudo">by {item.pseudo}</p>
-                <div className="deleteBtn" onClick={(e) => props.deleteItem(item.key, e)}>
+                <div className="deleteBtn" onClick={(e) => props.deleteItem(item.text, e)}>
                   <img src={logo} className="App-logo" alt="logo" />
                 </div>
               </div>

@@ -1,0 +1,77 @@
+  /* color: #61dafb; */
+*{
+  margin: 0;
+  padding: 0;
+}
+.container{
+  list-style: none;
+  width: 100%;
+}
+h1{
+  text-align: center;
+  padding:0 0 2rem 0;
+  color: #282c34;
+  text-shadow: 2px 2px 4px #61dafb;
+}
+.liste{
+  list-style: none;
+  width: 100%;
+  background-color: #282c34;
+}
+.items:nth-child(odd){
+  background-color: aliceblue;
+  border-radius: 25px 25px 25px 0;
+}
+.items:nth-child(even){
+  color: white;
+  border-radius: 25px 25px 0px 25px;
+}
+.items:nth-child(even) input{
+  color: white;
+  
+}
+.items{
+  overflow: hidden;
+  height: auto;
+  width: 100%;
+  height: 6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #61dafb;
+  
+  padding: 0 2rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 20px 20px -20px rgba(0, 0, 0, 0.8);
+}
+.inputItems{
+  border: none;
+  background-color: transparent;
+  font-size: 1rem;
+  padding: .2rem ;
+  text-transform: capitalize;
+  transition: all 01s;
+  width: 60%;
+}
+.inputItems:focus{
+  border: none;
+  outline: none;
+  background-color: #61dafb;
+  box-shadow: 0px 0px 18px rgba(22, 247, 255, 0.8);
+  width: 80%;
+  
+}
+.items:nth-child(even) .inputItems{
+  background-color: transparent;
+}
+.items:nth-child(even) .inputItems:focus{
+  background-color: #61dafb;
+  color:black;
+}
+.deleteBtn{
+  overflow: hidden;
+}
+.pseudo{
+  font-size: 0.8rem;
+  font-weight: 300;
+}

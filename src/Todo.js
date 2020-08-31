@@ -8,8 +8,9 @@ export default class Todo extends Component{
   constructor(props){
     super()
     this.state = {
-
+      
       items:[],
+      
       currentItem:{
         text:'',
         key: '',
@@ -17,6 +18,7 @@ export default class Todo extends Component{
       }
     }
   }
+
 //recupérer la value input et setState({})
   handleInput = (ev) =>{
     this.setState({
@@ -28,8 +30,8 @@ export default class Todo extends Component{
     })
     ev.target.value = ''
     
-    
   }
+
   //add
   addItem = (ev) =>{
     ev.preventDefault()
@@ -55,13 +57,11 @@ export default class Todo extends Component{
         text : this.state.currentItem.text,
         key: this.state.currentItem.key,
         pseudo: JSON.parse(localStorage.getItem('pseudo'))
-      }).then((docRef) => {
-        
-        
-      }) 
+      })
     }
    this.saveStateToLocalStorage()
   }
+
   //delete
   deleteItem =(key,ev)=>{
     db.collection('todos').doc(key).delete()
@@ -77,7 +77,16 @@ export default class Todo extends Component{
 
    //editer
    setUpdate =(text, key)=>{
-     const items = this.state.items
+    const items = this.state.items
+    console.log(text)
+    /* const dataRef = db.collection("todos").doc(text);
+    return dataRef.update({
+      text: this.text
+    })
+    .then(function() {
+        console.log("Document successfully updated!");
+    }) */
+
     items.forEach((item) => {
       if(item.key===key){
         item.text = text
@@ -87,7 +96,7 @@ export default class Todo extends Component{
       items : items
     })
     this.saveStateToLocalStorage()
-   }
+}
 
    //setLocalStorage
    saveStateToLocalStorage = () => {
@@ -96,18 +105,8 @@ export default class Todo extends Component{
   }
   
   reload(e){
-    console.log(e)
+    //console.log(e)
     const state = db.collection('todos')
-    /* if (state) {
-      this.setState(JSON.parse(state))
-      this.setState({
-        currentItem : {
-          text:'',
-          key:'',
-          pseudo: JSON.parse(localStorage.getItem('pseudo'))
-        }
-      })
-    } */
      if (state) {
       state
       .get()
@@ -121,10 +120,10 @@ export default class Todo extends Component{
             pseudo: JSON.parse(localStorage.getItem('pseudo'))
           }
         })
-        console.log(this.state.items)
+       // console.log(this.state.items)
       
       })
-      .then(function(doc) {
+    /*   .then(function(doc) {
         if (doc.exists) {
             console.log("Document data:", doc.data());
         } else {
@@ -133,53 +132,13 @@ export default class Todo extends Component{
         }
     }).catch(function(error) {
         console.log("Error getting document:", error);
-    });
+    }); */
   
       
     } 
   }
   componentDidMount() {
-  
-    const state = db.collection('todos')
-    /* if (state) {
-      this.setState(JSON.parse(state))
-      this.setState({
-        currentItem : {
-          text:'',
-          key:'',
-          pseudo: JSON.parse(localStorage.getItem('pseudo'))
-        }
-      })
-    } */
-     if (state) {
-      state
-      .get()
-      .then(querySnapshot => {
-        this.setState({
-          items : querySnapshot.docs.map(doc => doc.data()),
-         
-          currentItem : {
-            text:'',
-            key:'',
-            pseudo: JSON.parse(localStorage.getItem('pseudo'))
-          }
-        })
-        console.log(this.state.items)
-      
-      })
-      .then(function(doc) {
-        if (doc.exists) {
-            console.log("Document data:", doc.data());
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-        }
-    }).catch(function(error) {
-        console.log("Error getting document:", error);
-    });
-  
-      
-    } 
+    this.reload() 
   }
   
   render(){

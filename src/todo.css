@@ -65,12 +65,13 @@
 
   .todoBoard input{
     border: 1px solid #61dafb;
-    width: 50%;
+    width: 60%;
     background-color: transparent;
     font-size: 1rem;
     padding: .2rem ;
     transition: all 01s;
     color: white;
+    background-color: #61dafb;
     
   }
   .todoBoard input:focus{
@@ -81,14 +82,15 @@
     
   }
   .todoBoard input::placeholder{
-    
+    color: white;
     font-size: .8rem;
+    opacity: 0.6;
     
   }
   .todoBoard input:focus::placeholder{
     color: white;
     font-size: .8rem;
-    
+    opacity: 1;
   }
   
   .addBtn{
